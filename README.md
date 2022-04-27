@@ -51,7 +51,7 @@ cd boundary
 - Configure boundary using `terraform apply --var-file=tfvarts.vars` (without the target flag), this will configure boundary per `boundary/main.tf`
 
 ## Login
-![](./img/boundary1.png)
+![](./img/boundary1.png width="40%")
 ![](./img/boundary2.png)
 - Open the console in a browser and login to the instance using one of the `backend_users` defined in the main.tf (or, if you saved the output from deploying the aws module, use the output from the init script for the default username/password)
 - Find your org, then project, then targets. Save the ID of the target. 
