@@ -52,7 +52,7 @@ cd boundary
 
 ## Login
 <img src=./img/boundary1.png width="40%">
-<img src=./img/boundaryé.png width="80%">
+<img src=./img/boundary2.png width="80%">
 - Open the console in a browser and login to the instance using one of the `backend_users` defined in the main.tf (or, if you saved the output from deploying the aws module, use the output from the init script for the default username/password)
 - Find your org, then project, then targets. Save the ID of the target. 
 - Find your auth methods, and save the auth method ID.
@@ -98,9 +98,17 @@ vault token create \
   -period=20m \
   -renewable=true
 
-add token on vars.tf file, variable : vault-token
+Solution 1 : 
+add token on variables.tf file, variable : vault-token
+Execute terraform
+```
+terraform plan && terraform apply
+```
+
+Solution 2 : 
+Complete the tfvars.tf file
 
 ```
-terraform plan
-terraform apply
+terraform plan --var-file=tfvars.vars
+terraform apply --var-file=tfvars.vars
 ```
