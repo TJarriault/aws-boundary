@@ -1,8 +1,3 @@
-#boundary authenticate password \
-#    -addr=http://boundary-t-controller-werewolf-2945817b2d73f929.elb.us-east-1.amazonaws.com:9200 \
-#    -auth-method-id=ampw_rsn57FCOqL \
-#    -login-name=jim \
-#    -password=foofoofoo
 
 
 AUTHMETHOD="ampw_XXXX"

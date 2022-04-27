@@ -1,4 +1,4 @@
-ISSUER="https://DOMAIN-NAME/auth/realms/master"
+ISSUER="https://ISSUER-DOMAIN-NAME/auth/realms/master"
 CLIENT_ID="boundary"
 CLIENT_SECRET="xxxx"
 PREFIX_URL="http://<BOUNDARY-URL>:9200"
