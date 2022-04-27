@@ -43,10 +43,10 @@ If the private key is not named the same as the public key but without the .pub 
 cd boundary
 
 - Configure tfvarts.vars to complete somes variables
- KMS key
- ISSUER (keycloak)
- VAULT URL
- VAULT TOKEN
+ - KMS key
+ - ISSUER (keycloak)
+ - VAULT URL
+ - VAULT TOKEN
 
 - Configure boundary using `terraform apply --var-file=tfvarts.vars` (without the target flag), this will configure boundary per `boundary/main.tf`
 
