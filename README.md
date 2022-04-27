@@ -5,9 +5,9 @@ This directory contains two deployment examples for Boundary using Terraform. Th
 ![](./img/boundary-schema.png)
 
 ## Requirements
-- Terraform 0.13
+- Terraform 1.1.5
 - Go 1.15 or later 
-- EKS cluster
+- AWS EKS cluster
 
 # Deploy EKS cluster and components
 [EKS Cluster](./eks-v2/)
