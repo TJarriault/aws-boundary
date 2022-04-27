@@ -1,0 +1,94 @@
+# tja-featurepoc
+
+
+
+# Getting started to deploy Keycloak
+To make this deployment, we'll use kubernetes operator
+
+https://www.keycloak.org/docs/latest/server_installation/index.html#_install_by_command
+
+## Keycloak Operator installation
+Installing from command line : https://www.keycloak.org/docs/latest/server_installation/index.html#_install_by_command
+
+```bash
+git clone https://github.com/keycloak/keycloak-operator
+cd keycloak-operator 
+make cluster/prepare
+```
+
+
+- [_] Install all required custom resource definitions:
+
+```
+$ kubectl apply -f deploy/crds/
+```
+
+
+Create a new namespace (or reuse an existing one) such as the namespace keycloak:
+
+```
+$ kubectl create namespace keycloak
+```
+
+
+Deploy a role, role binding, and service account for the Operator:
+
+```
+$ kubectl apply -f deploy/role.yaml -n keycloak
+$ kubectl apply -f deploy/role_binding.yaml -n keycloak
+$ kubectl apply -f deploy/service_account.yaml -n keycloak
+```
+
+
+Deploy the Operator:
+
+```
+$ kubectl apply -f deploy/operator.yaml -n keycloak
+```
+
+Confirm that the Operator is running:
+
+```
+$ kubectl get deployment keycloak-operator -n keycloak
+NAME                READY   UP-TO-DATE   AVAILABLE   AGE
+keycloak-operator   1/1     1            1           41s
+```
+
+
+## Keycloak cluster deployment
+Ref : https://www.keycloak.org/docs/latest/server_installation/index.html#creating-a-keycloak-custom-resource-on-kubernetes
+
+We use the keycloak example configuration
+deploy/keycloak/keycloak.yaml
+
+```yaml
+apiVersion: keycloak.org/v1alpha1
+kind: Keycloak
+metadata:
+  name: sogeti-poc-keycloak
+  labels:
+    app: sso
+spec:
+  instances: 1
+  extensions:
+    - https://github.com/aerogear/keycloak-metrics-spi/releases/download/1.0.4/keycloak-metrics-spi-1.0.4.jar
+  externalAccess:
+    enabled: True
+  podDisruptionBudget:
+    enabled: True
+  # User needs to provision the external database
+  externalDatabase:
+    enabled: True
+```
+
+Create the ingress using your YAML file. kubectl apply -f <filename>.yaml -n <namespace>
+```
+kubectl apply -f keycloak.yaml -n keycloak
+keycloak.keycloak.org/example-keycloak created
+```
+
+Find ingress
+
+
+
+

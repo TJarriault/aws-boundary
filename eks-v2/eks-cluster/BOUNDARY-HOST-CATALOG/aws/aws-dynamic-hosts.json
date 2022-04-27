@@ -1,0 +1,106 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+  "Description" : "AWS CloudFormation template for Boundary Dynamic Hosts tutorial. Deploying this template will incur costs to your AWS account.",
+  "Parameters" : {
+    "KeyName": {
+      "Description" : "Name of an existing EC2 key pair for SSH access to the EC2 instance.",
+      "Type": "AWS::EC2::KeyPair::KeyName",
+      "Default": "boundary-keypair",
+      "ConstraintDescription":"must be the name of an existing EC2 KeyPair."
+    },
+    "SSHLocation":{
+      "Description":"The IP address range that can be used to SSH to the EC2 instances",
+      "Type":"String",
+      "MinLength":"9",
+      "MaxLength":"18",
+      "Default":"0.0.0.0/0",
+      "AllowedPattern":"(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})/(\\d{1,2})",
+      "ConstraintDescription":"must be a valid IP CIDR range of the form x.x.x.x/x."
+   }
+  },
+  "Resources" : {
+    "InstanceSecurityGroup" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Enable SSH access via port 22",
+        "SecurityGroupIngress" : [ {
+          "IpProtocol" : "tcp",
+          "FromPort" : "22",
+          "ToPort" : "22",
+          "CidrIp" : { "Ref" : "SSHLocation"}
+        } ]
+      }
+    },
+    "EC2Instance1" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType" : "t3.micro",
+        "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
+        "AvailabilityZone" : "us-east-1a",
+        "ImageId" : "ami-083602cee93914c0c",
+        "Tags" : [ 
+          {"Key" : "Name", "Value" : "boundary-1-dev"}, 
+          {"Key" : "service-type", "Value" : "database"}, 
+          {"Key" : "application", "Value" : "dev"}
+        ]
+      }
+    },
+    "EC2Instance2" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType" : "t3.micro",
+        "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
+        "AvailabilityZone" : "us-east-1a",
+        "ImageId" : "ami-083602cee93914c0c",
+        "Tags" : [ 
+          {"Key" : "Name", "Value" : "boundary-2-dev"}, 
+          {"Key" : "service-type", "Value" : "database"}, 
+          {"Key" : "application", "Value" : "dev"}
+        ]
+      }
+    },
+    "EC2Instance3" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType" : "t3.micro",
+        "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
+        "AvailabilityZone" : "us-east-1a",
+        "ImageId" : "ami-083602cee93914c0c",
+        "Tags" : [ 
+          {"Key" : "Name", "Value" : "boundary-3-production"}, 
+          {"Key" : "service-type", "Value" : "database"}, 
+          {"Key" : "application", "Value" : "production"}
+        ]
+      }
+    },
+    "EC2Instance4" : {
+      "Type" : "AWS::EC2::Instance",
+      "Properties" : {
+        "KeyName" : { "Ref" : "KeyName" },
+        "InstanceType" : "t3.micro",
+        "SecurityGroups" : [ { "Ref" : "InstanceSecurityGroup" } ],
+        "AvailabilityZone" : "us-east-1a",
+        "ImageId" : "ami-083602cee93914c0c",
+        "Tags" : [ 
+          {"Key" : "Name", "Value" : "boundary-4-production"}, 
+          {"Key" : "service-type", "Value" : "database"}, 
+          {"Key" : "application", "Value" : "prod"}
+        ]
+      }
+    }
+  },
+  "Outputs":{
+    "InstanceId":{
+       "Description":"InstanceId of the newly created EC2 instance",
+       "Value":{
+          "Ref":"EC2Instance1",
+          "Ref":"EC2Instance2",
+          "Ref":"EC2Instance3",
+          "Ref":"EC2Instance4"
+       }
+    }
+  }
+}

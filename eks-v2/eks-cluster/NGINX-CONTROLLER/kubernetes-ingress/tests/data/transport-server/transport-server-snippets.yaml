@@ -1,0 +1,16 @@
+apiVersion: k8s.nginx.org/v1alpha1
+kind: TransportServer
+metadata:
+  name: transport-server
+spec:
+  streamSnippets: limit_conn_zone $binary_remote_addr zone=addr:10m;
+  serverSnippets: limit_conn addr 1;
+  listener:
+    name: dns-tcp
+    protocol: TCP
+  upstreams:
+    - name: dns-app
+      service: coredns
+      port: 5353
+  action:
+    pass: dns-app

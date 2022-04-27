@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    custom.nginx.org/feature-a: "on"
+    custom.nginx.org/feature-b: "512"
+    custom.nginx.org/test-split-feature: "  192.168.1.1   ,some-ip"
+  name: custom-annotations-ingress
+spec:
+  rules:
+  - host: custom-annotations.example.com
+    http:
+      paths:
+      - path: /backend2
+        pathType: Prefix
+        backend:
+          service:
+            name: backend2-svc
+            port:
+              number: 80
+      - path: /backend1
+        pathType: Prefix
+        backend:
+          service:
+            name: backend1-svc
+            port:
+              number: 80

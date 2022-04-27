@@ -1,0 +1,77 @@
+Name:         ingresstest-ingress-nginx-controller-5b4f59554f-sc7hq
+Namespace:    test
+Priority:     0
+Node:         gke-featureflags2-default-pool-81386143-q866/10.132.0.28
+Start Time:   Fri, 31 Dec 2021 00:18:57 +0000
+Labels:       app.kubernetes.io/component=controller
+              app.kubernetes.io/instance=ingresstest
+              app.kubernetes.io/name=ingress-nginx
+              pod-template-hash=5b4f59554f
+Annotations:  <none>
+Status:       Running
+IP:           10.11.0.49
+IPs:
+  IP:           10.11.0.49
+Controlled By:  ReplicaSet/ingresstest-ingress-nginx-controller-5b4f59554f
+Containers:
+  controller:
+    Container ID:  containerd://013727ef562294ca73342ecc54eba35618136de028e03664098ef73db038d112
+    Image:         k8s.gcr.io/ingress-nginx/controller:v1.1.0@sha256:f766669fdcf3dc26347ed273a55e754b427eb4411ee075a53f30718b4499076a
+    Image ID:      k8s.gcr.io/ingress-nginx/controller@sha256:f766669fdcf3dc26347ed273a55e754b427eb4411ee075a53f30718b4499076a
+    Ports:         80/TCP, 443/TCP, 8443/TCP
+    Host Ports:    0/TCP, 0/TCP, 0/TCP
+    Args:
+      /nginx-ingress-controller
+      --publish-service=$(POD_NAMESPACE)/ingresstest-ingress-nginx-controller
+      --election-id=ingress-controller-leader
+      --controller-class=k8s.io/ingress-nginx
+      --configmap=$(POD_NAMESPACE)/ingresstest-ingress-nginx-controller
+      --watch-namespace=$(POD_NAMESPACE)
+      --validating-webhook=:8443
+      --validating-webhook-certificate=/usr/local/certificates/cert
+      --validating-webhook-key=/usr/local/certificates/key
+    State:          Running
+      Started:      Fri, 31 Dec 2021 00:18:58 +0000
+    Ready:          True
+    Restart Count:  0
+    Requests:
+      cpu:      100m
+      memory:   90Mi
+    Liveness:   http-get http://:10254/healthz delay=10s timeout=1s period=10s #success=1 #failure=5
+    Readiness:  http-get http://:10254/healthz delay=10s timeout=1s period=10s #success=1 #failure=3
+    Environment:
+      POD_NAME:       ingresstest-ingress-nginx-controller-5b4f59554f-sc7hq (v1:metadata.name)
+      POD_NAMESPACE:  test (v1:metadata.namespace)
+      LD_PRELOAD:     /usr/local/lib/libmimalloc.so
+    Mounts:
+      /usr/local/certificates/ from webhook-cert (ro)
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-d5z9b (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  webhook-cert:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  ingresstest-ingress-nginx-admission
+    Optional:    false
+  kube-api-access-d5z9b:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   Burstable
+Node-Selectors:              kubernetes.io/os=linux
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From                      Message
+  ----    ------     ----   ----                      -------
+  Normal  Scheduled  2m37s  default-scheduler         Successfully assigned test/ingresstest-ingress-nginx-controller-5b4f59554f-sc7hq to gke-featureflags2-default-pool-81386143-q866
+  Normal  Pulled     2m36s  kubelet                   Container image "k8s.gcr.io/ingress-nginx/controller:v1.1.0@sha256:f766669fdcf3dc26347ed273a55e754b427eb4411ee075a53f30718b4499076a" already present on machine
+  Normal  Created    2m36s  kubelet                   Created container controller
+  Normal  Started    2m36s  kubelet                   Started container controller
+  Normal  RELOAD     2m34s  nginx-ingress-controller  NGINX reload triggered due to a change in configuration
