@@ -9,11 +9,13 @@ This directory contains two deployment examples for Boundary using Terraform. Th
 - Go 1.15 or later 
 - EKS cluster
 
-## Deploy EKS cluster and components
+# Deploy EKS cluster and components
 [EKS Cluster](./eks-v2/)
 
 
-## Deploy boundary
+# Deploy boundary
+The folder "SCRIPTS" contain all script, to permit you to validate boundary deployment on AWS platform
+
 To deploy this example:
 - Make sure you have a local checkout of `github.com/hashicorp/boundary`
 - Build the `boundary` binary for linux using `XC_OSARCH=linux/amd64 make dev` or download from our [release page](https://boundaryproject.io/) on our docs site.
